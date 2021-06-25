@@ -15,6 +15,8 @@ public class Appuntamento {
 	private LocalTime oraInizio = LocalTime.now();
 	private LocalTime oraFine = LocalTime.now();
 	
+	
+	
 	private String argomento;
 	
 	public Appuntamento() {	}
