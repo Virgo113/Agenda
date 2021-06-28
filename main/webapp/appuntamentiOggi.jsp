@@ -1,5 +1,6 @@
 
 <!DOCTYPE html>
+<%@page import="java.time.LocalDate"%>
 <%@page import="model.Appuntamento"%>
 <%@page import="java.util.List"%>
 <%@page import="dal.AppuntamentoDAOImpl"%>
@@ -7,16 +8,15 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Appuntamenti</title>
+<title>Insert title here</title>
 </head>
 <body>
 
-	<h1>Appuntamenti</h1>
-
+<h1>Appuntamenti del giorno</h1>
 
 <% 
  AppuntamentoDAO ad = new AppuntamentoDAOImpl();
- List<Appuntamento> app = ad.trovaTutti();
+ List<Appuntamento> app = ad.trovaByData(LocalDate.now());
  for (Appuntamento appuntamento : app) {
 		//System.out.println(appuntamento.getArgomento());
 		//System.out.println(appuntamento.getData());
@@ -30,22 +30,12 @@
         <p><%=a.toString() %></p>
     
     <% } %>
-
-
-	<form action="aggiungi" method="post">
-	
-	<input type="date" name="data" id="data" placeholder="Data">
-	<input type="time" name="oraInizio" id="oraInizio" placeholder="Ora Inizio">
-	<input type="time" name="oraFine" id="oraFine" placeholder="Ora Fine">
-	<input type="text" name="argomento" id="argomento" placeholder="Argomento">
-	
-	<input type="submit" value="aggiungi">
-
-	
-	</form>
-	<a href="http://localhost:8080/Es_Agenda/appuntamentiOggi.jsp">
-		<button>Appuntamenti di oggi</button></a>
-
+    
+    <a href="http://localhost:8080/Es_Agenda/index.jsp">
+	<button>Tutti gli appuntamenti</button></a>
+    
+    
+    
 
 </body>
 </html>

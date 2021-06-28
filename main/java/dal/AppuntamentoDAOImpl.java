@@ -114,11 +114,12 @@ public class AppuntamentoDAOImpl implements AppuntamentoDAO {
 	@Override
 	public List<Appuntamento> trovaByData(LocalDate data) {
 		
-List<Appuntamento> appuntamenti = new LinkedList<>();
+		List<Appuntamento> appuntamenti = new LinkedList<>();
 		
 		try {
-			stat = db.getConn().createStatement();
-			rs = stat.executeQuery(TROVA_BY_DATA);
+			ps = db.getConn().prepareStatement(TROVA_BY_DATA);
+			ps.setDate(1, Date.valueOf(data));
+			rs = ps.executeQuery();
 			
 			
 			while (rs.next()) {
