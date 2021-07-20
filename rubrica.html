@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+
+    <ul id="lista">
+        <h1>nomi</h1>
+    </ul>
+
+
+    <div id="dialog" title="Basic dialog">
+        
+    </div>
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   
+   <script type="text/javascript">
+    
+    $.ajax({
+        url:'https://reqres.in/api/users?page=2',
+        type: 'GET',
+        dataType: 'json',
+        success: function(dati){
+            console.log(dati);
+            var lista = $("#lista");
+            var elemento = dati.data[2].first_name;
+
+            //$(lista).append("<li>" + elemento + "</li>");
+            var listaUtenti = dati.data;
+
+            for(var i = 0; i<listaUtenti.length; i++){
+                //var nome = listaUtenti[i].first_name;
+                $(lista).append("<li id= \"utente" + i + "\" class=\"opener\">" + listaUtenti[i].first_name + "</li>");
+                
+                //$("#dialog").append("<p>" + listaUtenti[i].first_name + "<br>" + listaUtenti[i].last_name + "<br>" + listaUtenti[i].email + "</p>" + "<img src=\"" + listaUtenti[i].avatar + "\">");
+
+            }
+
+            $("#dialog").append("<p>" + listaUtenti[1].first_name + "<br>" + listaUtenti[1].last_name + "<br>" + listaUtenti[1].email + "</p>" + "<img src=\"" + listaUtenti[1].avatar + "\">");
+            
+        },
+        error: function(){
+            console.log('qualcosa è andato storto');
+        }
+    });
+
+  $(function() {
+    $("#dialog").dialog({
+      autoOpen: false,
+      show: {
+        effect: "blind",
+        duration: 750
+      },
+      hide: {
+        effect: "explode",
+        duration: 500
+      }
+    });
+ 
+    $(".opener").on("click", function() {
+      $("#dialog").dialog("open");
+    });
+  } );
+    
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+
+    <ul id="lista">
+        <h1>nomi</h1>
+    </ul>
+
+
+    <div id="dialog" title="Basic dialog">
+        
+    </div>
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   
+   <script type="text/javascript">
+    
+    $.ajax({
+        url:'https://reqres.in/api/users?page=2',
+        type: 'GET',
+        dataType: 'json',
+        success: function(dati){
+            console.log(dati);
+            var lista = $("#lista");
+            var elemento = dati.data[2].first_name;
+
+            //$(lista).append("<li>" + elemento + "</li>");
+            var listaUtenti = dati.data;
+
+            for(var i = 0; i<listaUtenti.length; i++){
+                //var nome = listaUtenti[i].first_name;
+                $(lista).append("<li id= \"utente" + i + "\" class=\"opener\">" + listaUtenti[i].first_name + "</li>");
+                
+                //$("#dialog").append("<p>" + listaUtenti[i].first_name + "<br>" + listaUtenti[i].last_name + "<br>" + listaUtenti[i].email + "</p>" + "<img src=\"" + listaUtenti[i].avatar + "\">");
+
+            }
+
+            $("#dialog").append("<p>" + listaUtenti[1].first_name + "<br>" + listaUtenti[1].last_name + "<br>" + listaUtenti[1].email + "</p>" + "<img src=\"" + listaUtenti[1].avatar + "\">");
+            
+        },
+        error: function(){
+            console.log('qualcosa è andato storto');
+        }
+    });
+
+  $(function() {
+    $("#dialog").dialog({
+      autoOpen: false,
+      show: {
+        effect: "blind",
+        duration: 750
+      },
+      hide: {
+        effect: "explode",
+        duration: 500
+      }
+    });
+ 
+    $(".opener").on("click", function() {
+      $("#dialog").dialog("open");
+    });
+  } );
+    
+    </script>
+</body>
+</html>
