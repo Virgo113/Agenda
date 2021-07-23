@@ -1,153 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <title>Document</title>
+
 </head>
+
 <body>
 
-    <ul id="lista">
-        <h1>nomi</h1>
+  <div class="container">
+    <div id="accordion" class="my-5">
+      <h3>AGGIUNGI</h3>
+      <div>
+        <form action="https://reqres.in/api/users" method="post">
+          <div class="row">
+            <div class="col">
+              <input type="text" id="nome" class="form-control" placeholder="First name" aria-label="First name">
+            </div>
+            <div class="col">
+              <input type="text" id="cognome" class="form-control" placeholder="Last name" aria-label="Last name">
+            </div>
+          </div>
+          <div class="col">
+            <label for=""></label>
+            <input type="email" id="email" class="form-control" placeholder="Email" aria-label="Email">
+          </div>
+
+          <input type="button" value="Inserisci" id="btnInvio">
+        </form>
+      </div>
+    </div>
+
+
+
+
+    <h1>Nomi</h1>
+    <ul id="lista" class="list-group">
+
+    </ul>
+
+    <H2>storage</H2>
+    <ul id="storage" class="list-group">
+
     </ul>
 
 
-    <div id="dialog" title="Basic dialog">
-        
-    </div>
- 
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   
-   <script type="text/javascript">
-    
+  <div id="dialog" title="Dettagli Utente">
+
+  </div>
+
+  <!-- <button class="opener">Open Dialog</button> -->
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script>
+    // chiamata GET ---------
+
+    var btnEl = '<button class="btn btn-danger ms-auto"><i class="bi bi-hammer"></i></button>'
+    var btnSet = '<button class="btn btn-info ms-2"><i class="bi bi-pencil"></i></button>'
+
+
     $.ajax({
-        url:'https://reqres.in/api/users?page=2',
-        type: 'GET',
-        dataType: 'json',
-        success: function(dati){
-            console.log(dati);
-            var lista = $("#lista");
-            var elemento = dati.data[2].first_name;
+      url: 'https://reqres.in/api/users?page=1',
+      type: 'GET',
+      dataType: 'json',
+      success: function (dati) {
+        console.log(dati);
 
-            //$(lista).append("<li>" + elemento + "</li>");
-            var listaUtenti = dati.data;
+        var lista = $("#lista");
+        var utenti = dati.data;
 
-            for(var i = 0; i<listaUtenti.length; i++){
-                //var nome = listaUtenti[i].first_name;
-                $(lista).append("<li id= \"utente" + i + "\" class=\"opener\">" + listaUtenti[i].first_name + "</li>");
-                
-                //$("#dialog").append("<p>" + listaUtenti[i].first_name + "<br>" + listaUtenti[i].last_name + "<br>" + listaUtenti[i].email + "</p>" + "<img src=\"" + listaUtenti[i].avatar + "\">");
+        localStorage.clear();
 
-            }
+        for (var i = 0; i < utenti.length; i++) {
 
-            $("#dialog").append("<p>" + listaUtenti[1].first_name + "<br>" + listaUtenti[1].last_name + "<br>" + listaUtenti[1].email + "</p>" + "<img src=\"" + listaUtenti[1].avatar + "\">");
-            
-        },
-        error: function(){
-            console.log('qualcosa è andato storto');
+          $(lista).append('<li class="list-group-item d-flex"><span class="opener my-auto">' + utenti[i]
+            .first_name + '</span>' + btnEl + btnSet + '</li>');
+
+          localStorage.setItem([i], [utenti[i].first_name, utenti[i].last_name, utenti[i].email, utenti[i]
+            .avatar]);
+
         }
-    });
 
-  $(function() {
-    $("#dialog").dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 750
-      },
-      hide: {
-        effect: "explode",
-        duration: 500
-      }
-    });
- 
-    $(".opener").on("click", function() {
-      $("#dialog").dialog("open");
-    });
-  } );
-    
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-</head>
-<body>
+        // -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    <ul id="lista">
-        <h1>nomi</h1>
-    </ul>
-
-
-    <div id="dialog" title="Basic dialog">
-        
-    </div>
- 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   
-   <script type="text/javascript">
-    
-    $.ajax({
-        url:'https://reqres.in/api/users?page=2',
-        type: 'GET',
-        dataType: 'json',
-        success: function(dati){
-            console.log(dati);
-            var lista = $("#lista");
-            var elemento = dati.data[2].first_name;
-
-            //$(lista).append("<li>" + elemento + "</li>");
-            var listaUtenti = dati.data;
-
-            for(var i = 0; i<listaUtenti.length; i++){
-                //var nome = listaUtenti[i].first_name;
-                $(lista).append("<li id= \"utente" + i + "\" class=\"opener\">" + listaUtenti[i].first_name + "</li>");
-                
-                //$("#dialog").append("<p>" + listaUtenti[i].first_name + "<br>" + listaUtenti[i].last_name + "<br>" + listaUtenti[i].email + "</p>" + "<img src=\"" + listaUtenti[i].avatar + "\">");
-
-            }
-
-            $("#dialog").append("<p>" + listaUtenti[1].first_name + "<br>" + listaUtenti[1].last_name + "<br>" + listaUtenti[1].email + "</p>" + "<img src=\"" + listaUtenti[1].avatar + "\">");
-            
-        },
-        error: function(){
-            console.log('qualcosa è andato storto');
+        $("#storage").html('');
+        for (let i = 0; i < localStorage.length; i++) {
+          let key = localStorage.key(i);
+          $("#storage").append('<li class="list-group-item d-flex"><span class="opener my-auto">' + (
+            `${(localStorage.getItem(key[0]).split(',')[0])}`) + '</span>' + btnEl + btnSet + '</li>');
         }
+        // -------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        $('li').on('click', function () {
+
+          $("#dialog").html('');
+
+          const S_UTENTE = (localStorage.getItem([$(this).index()])).split(',');
+
+          $("#dialog").append("<p>" + S_UTENTE[0] + "</p>");
+          $("#dialog").append("<p>" + S_UTENTE[1] + "</p>");
+          $("#dialog").append("<p>" + S_UTENTE[2] + "</p>");
+          $("#dialog").append("<img src=\"" + S_UTENTE[3] + "\">");
+
+          //Elimina----
+
+          $('.btn-danger').on('click', function () {
+
+            console.log("non cancello ma ci sono");
+            console.log(localStorage.getItem([$(this).index('li')]));
+
+            $(this).closest('li').remove();
+
+            localStorage.removeItem([$(this).index()]);
+
+
+          })
+
+          //Modifica-----
+
+          $('.btn-info').on('click', function () {
+
+            console.log(utenti[$(this).index()]);
+
+            $('#nome').val(utenti[$(this).index()].first_name);
+            $('#cognome').val(utenti[$(this).index()].last_name);
+            $('#email').val(utenti[$(this).index()].email);
+
+            $(this).closest('li').remove();
+
+          })
+
+
+
+        })
+
+      },
+      error: function () {
+        console.log('qualcosa è andato storto');
+      }
+
+
     });
 
-  $(function() {
-    $("#dialog").dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 750
-      },
-      hide: {
-        effect: "explode",
-        duration: 500
-      }
+
+
+    //Metodo POST---------------
+
+
+    $('#btnInvio').on('click', function () {
+
+
+      $.ajax({
+
+        url: 'https://reqres.in/api/users',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+          email: $('#email').val(),
+          first_name: $('#nome').val(),
+          last_name: $('#cognome').val(),
+          avatar: 'https://via.placeholder.com/100x100',
+        },
+
+        success: function (response) {
+
+
+
+          $(lista).append('<li class="opener list-group-item d-flex">' + response.first_name + btnEl +
+            btnSet +
+            '</li>');
+          console.log(response);
+
+          localStorage.setItem(localStorage.length + 1, [response.first_name, response.last_name, response
+            .email
+          ]);
+
+          $('#nome').val('');
+          $('#cognome').val('');
+          $('#email').val('');
+
+
+          // -------------------------------------------------------------------------------------------------------------------------------------------------------
+
+          $("#storage").html('');
+          for (let i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i);
+            $("#storage").append('<li class="list-group-item d-flex"><span class="opener my-auto">' + (
+              `${(localStorage.getItem(key[0]).split(',')[0])}`) + '</span>' + btnEl + btnSet + '</li>');
+          }
+          // console.log((localStorage.getItem(1)).split(','));
+          // -------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+          $('li').on('click', function () {
+
+            // console.log("ciao");
+            // $("#dialog").html('');
+
+            // $("#dialog").append("<p>Virgilio</p>");
+            // $("#dialog").append("<p>" + response[$(this).index('li')].last_name + "</p>");
+            // $("#dialog").append("<p>" + response[$(this).index('li')].email + "</p>");
+
+            const S_UTENTE = (localStorage.getItem([$(this).index('li')])).split(',');
+
+            $("#dialog").append("<p>" + S_UTENTE[0] + "</p>");
+            $("#dialog").append("<p>" + S_UTENTE[1] + "</p>");
+            $("#dialog").append("<p>" + S_UTENTE[2] + "</p>");
+            $("#dialog").append("<img src=\"" + S_UTENTE[3] + "\">");
+
+            // ELIMINA---------------------------------------------------------------------------------
+
+            $('.btn-danger').on('click', function () {
+
+              console.log("non cancello ma ci sono");
+              
+              localStorage.getItem([$(this).index('li')]).removeItem;
+              
+              $(this).closest('li').remove();
+
+            })
+
+            // MODIFICA---------------------------------------------------------------------------------
+
+            $('.btn-info').on('click', function () {
+
+              console.log(response);
+
+              $('#nome').val(response.first_name);
+              $('#cognome').val(response.last_name);
+              $('#email').val(response.email);
+
+              $(this).closest('li').remove();
+
+            })
+
+
+
+          })
+
+
+
+        },
+        error: function () {
+          console.log('non comunica');
+        }
+
+      })
+
+
+    })
+
+
+
+
+
+    // $('li').on('click', function () {
+
+    //   $("#dialog").html('');
+
+    //   // $("#dialog").append("<p>" + sessionStorage.getItem('utente1').value + "</p>");
+    //   // $("#dialog").append("<p>" + utenti[$(this).index('li')].last_name + "</p>");
+    //   // $("#dialog").append("<p>" + utenti[$(this).index('li')].email + "</p>");
+    //   // $("#dialog").append("<img src=\"" + utenti[$(this).index('li')].avatar + "\">");
+
+
+    // })
+
+    //Funzione ELIMINA---------------
+
+    // $('#btnEl').on('click', function() {
+    //   console.log("non cancello ma ci sono");
+    //   $(this).closest('li').remove();
+    // })
+
+
+    //Funzione MODIFICA---------------------
+
+
+
+    // $('.btn-info').on('click', function () {
+
+    // $('#nome').val(utenti[$(this).index()].first_name);
+    // $('#cognome').val(utenti[$(this).index()].last_name);
+    // $('#email').val(utenti[$(this).index()].email);
+
+    // Dialog-----------------------
+
+    $(function () {
+      $("#dialog").dialog({
+        autoOpen: false,
+        show: {
+          effect: "blind",
+          duration: 1000
+        },
+        hide: {
+          effect: "explode",
+          duration: 1000
+        }
+      });
+
+      $(".opener").on("click", function () {
+        $("#dialog").dialog('open');
+      });
     });
- 
-    $(".opener").on("click", function() {
-      $("#dialog").dialog("open");
+
+
+
+    // Accordion---------------------
+
+    $(function () {
+      $("#accordion").accordion({
+        collapsible: true
+      });
     });
-  } );
-    
-    </script>
+  </script>
+
 </body>
+
 </html>
